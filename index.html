@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Interativo</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
-<img src="" alt="">
-  <h1>QUIZ APP</h1>
-  <main>
-    <div class="content">
-      <span class="spnQtd"></span>
-      <span class="question"></span>
-      <div class="answers"></div>
+    <div class="quiz-container">
+        <h1>Quiz </h1>
+        <h3> Ensino médio Sistema Solar</h3>
+        <div class="question">
+            <p id="question-text"></p>
+            <ul id="options">
+                <li class="option" data-option="a"></li>
+                <li class="option" data-option="b"></li>
+                <li class="option" data-option="c"></li>
+                <li class="option" data-option="d"></li>
+            </ul>
+        </div>
+        <button id="submit-answer">Responder</button>
+        <p id="message"></p>
+        <p id="score">Pontuação: 0</p>
     </div>
-    <div class="finish">
-      <span></span>
-      <button>Reiniciar</button>
-    </div>
-  </main>
-  
-  <script src="script.js" type="module"></script>
 </body>
 </html>
+

@@ -1,65 +1,115 @@
-const question = document.querySelector(".question");
-const answers = document.querySelector(".answers");
-const spnQtd = document.querySelector(".spnQtd");
-const textFinish = document.querySelector(".finish span");
-const content = document.querySelector(".content");
-const contentFinish = document.querySelector(".finish");
-const btnRestart = document.querySelector(".finish button");
+const questions = [
+  {
+      question: "Os planetas do Sistema Solar podem ser classificados conforme a sua composição. Com base nessa classificação, pode-se afirmar que são planetas rochosos:",
+      image:
+      options: {
+          a: "Terra, Marte, Urano e Netuno.",
+          b: "Terra, Marte, Saturno e Plutão.",
+          c: "Vênus, Marte, Saturno e Urano.",
+          d: "Mercúrio, Vênus, Terra e Marte"
+      },
+      answer: "d",
+  },
+  {
+      question: "Os planetas gasosos são compostos por gases, como hidrogênio e hélio. Qual o nome do maior planeta gasoso do Sistema Solar?",
+  
+      options: {
+          a: "Marte",
+          b: "Júpiter",
+          c: "Saturno",
+          d: "Urano"
+      },
+      answer: "d",
+  },
+  {question: "O planeta Terra realiza vários movimentos, sendo os dois principais o de rotação, realizado em torno de si mesmo, e o movimento realizado em torno do Sol, sendo corretamente chamado de:",
+  options: {
+      a: "rotação.",
+      b: "mutação.",
+      c: "movimentação.",
+      d: "translação."
+  },
+  answer: "a",
+},
+{question: "O movimento de rotação realizado pelo planeta Terra tem como consequência principal a",
 
-import questions from "./questoes.js";
+  options: {
+      a: "sucessão dos dias e das noites.",
+      b: "ocorrência das fases da Lua.",
+      c: "definição das temperaturas.",
+      d: "divisão das estações do ano."
+  },
+  answer: "a",
+},
 
-let currentIndex = 0;
-let questionsCorrect = 0;
+{question: "Como é corretamente denominada a teoria que justifica a formação do Sistema Solar?",
 
-btnRestart.onclick = () => {
-  content.style.display = "flex";
-  contentFinish.style.display = "none";
+  options: {
+      a: "Teoria celular.",
+      b: "Teoria da nebulosa.",
+      c: "Teoria da deriva.",
+      d: "Teoria das cordas."
+  },
+  answer: "b",
+},
+];
 
-  currentIndex = 0;
-  questionsCorrect = 0;
-  loadQuestion();
-};
+const questionText = document.getElementById("question-text");
+const optionsList = document.getElementById("options");
+const submitButton = document.getElementById("submit-answer");
+const message = document.getElementById("message");
+const scoreDisplay = document.getElementById("score");
 
-function nextQuestion(e) {
-  if (e.target.getAttribute("data-correct") === "true") {
-    questionsCorrect++;
-  }
+let currentQuestionIndex = 0;
+let score = 0;
+let chances = 2;
 
-  if (currentIndex < questions.length - 1) {
-    currentIndex++;
-    loadQuestion();
+function displayQuestion(index) {
+  const currentQuestion = questions[index];
+  questionText.textContent = currentQuestion.question;
+  optionsList.innerHTML = "";
+
+  Object.entries(currentQuestion.options).forEach(([key, value]) => {
+      const li = document.createElement("li");
+      li.className = "option";
+      li.textContent = value;
+      li.setAttribute("data-option", key);
+      optionsList.appendChild(li);
+  });
+}
+
+function checkAnswer(selectedOption) {
+  const currentQuestion = questions[currentQuestionIndex];
+  if (selectedOption === currentQuestion.answer) {
+      score += 10;
+      message.textContent = "Resposta correta!";
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+          displayQuestion(currentQuestionIndex);
+      } else {
+          questionText.textContent = "Quiz concluído!";
+          optionsList.innerHTML = "";
+          submitButton.disabled = true;
+          scoreDisplay.textContent = `Pontuação: ${score}`;
+      }
   } else {
-    finish();
+      chances--;
+      if (chances === 0) {
+          message.textContent = "Você perdeu suas chances! Voltando ao início...";
+          currentQuestionIndex = 0;
+          score = 0;
+          chances = 2;
+          displayQuestion(currentQuestionIndex);
+      } else {
+          message.textContent = "Resposta incorreta. Tente novamente.";
+      }
   }
 }
 
-function finish() {
-  textFinish.innerHTML = `você acertou ${questionsCorrect} de ${questions.length}`;
-  content.style.display = "none";
-  contentFinish.style.display = "flex";
-}
+optionsList.addEventListener("click", (event) => {
+  const selectedOption = event.target.getAttribute("data-option");
+  if (selectedOption) {
+      checkAnswer(selectedOption);
+  }
+});
 
-function loadQuestion() {
-  spnQtd.innerHTML = `${currentIndex + 1}/${questions.length}`;
-  const item = questions[currentIndex];
-  answers.innerHTML = "";
-  question.innerHTML = item.question;
-
-  item.answers.forEach((answer) => {
-    const div = document.createElement("div");
-
-    div.innerHTML = `
-    <button class="answer" data-correct="${answer.correct}">
-      ${answer.option}
-    </button>
-    `;
-
-    answers.appendChild(div);
-  });
-
-  document.querySelectorAll(".answer").forEach((item) => {
-    item.addEventListener("click", nextQuestion);
-  });
-}
-
-loadQuestion();
+displayQuestion(currentQuestionIndex);
