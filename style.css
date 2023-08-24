@@ -17,7 +17,7 @@ body {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #cbe1ec;
+  background-color: #bcd3ea;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -53,7 +53,7 @@ h3 {
 }
 
 .option:hover {
-  background-color: #17688a;
+  background-color: #c9e9f7;
 }
 
 #submit-answer {
