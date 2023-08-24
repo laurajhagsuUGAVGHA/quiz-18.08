@@ -1,7 +1,7 @@
 const questions = [
   {
       question: "Os planetas do Sistema Solar podem ser classificados conforme a sua composição. Com base nessa classificação, pode-se afirmar que são planetas rochosos:",
-      image:
+      image:'marte.png',
       options: {
           a: "Terra, Marte, Urano e Netuno.",
           b: "Terra, Marte, Saturno e Plutão.",
